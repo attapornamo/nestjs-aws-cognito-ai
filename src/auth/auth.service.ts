@@ -11,6 +11,7 @@ import { ConfirmForgotPasswordRequestDto } from './dto/confirmforgotpassword.req
 import { AdminDeleteUserRequestDto } from './dto/admindeleteuser.request.dto';
 import { ListUsersRequestDto } from './dto/listusers.request.dto';
 import { RequireNewPasswordRequestDto } from './dto/requirenewpassword.request.dto';
+import { AdminGetUserRequestDto } from './dto/admingetuser.request.dto';
 import {
   CognitoIdentityProviderClient,
   InitiateAuthCommand,
@@ -21,6 +22,7 @@ import {
   ChangePasswordCommand,
   GetUserCommand,
   AdminCreateUserCommand,
+  AdminGetUserCommand,
   ResendConfirmationCodeCommand,
   ConfirmForgotPasswordCommand,
   ListUsersCommand,
@@ -306,6 +308,26 @@ export class AuthService {
 
     try {
       const command = new ListUsersCommand(params);
+      const response = await this.client.send(command);
+      return response;
+    } catch (error) {
+      if (error.name !== '') {
+        return error.name;
+      }
+
+      // Handle other exceptions
+      throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+  }
+
+  async adminGetUser(adminGetUser: AdminGetUserRequestDto) {
+    const params = {
+      UserPoolId: this.userPoolId,
+      Username: adminGetUser.email,
+    };
+
+    try {
+      const command = new AdminGetUserCommand(params);
       const response = await this.client.send(command);
       return response;
     } catch (error) {
