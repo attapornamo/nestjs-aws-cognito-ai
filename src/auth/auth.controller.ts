@@ -18,6 +18,7 @@ import { ConfirmForgotPasswordRequestDto } from './dto/confirmforgotpassword.req
 import { AdminDeleteUserRequestDto } from './dto/admindeleteuser.request.dto';
 import { ListUsersRequestDto } from './dto/listusers.request.dto';
 import { RequireNewPasswordRequestDto } from './dto/requirenewpassword.request.dto';
+import { AdminGetUserRequestDto } from './dto/admingetuser.request.dto';
 
 @Controller('auth')
 export class AuthController {
@@ -135,6 +136,15 @@ export class AuthController {
   async listUsers(@Body() listUsersRequest: ListUsersRequestDto) {
     try {
       return await this.authService.listUsers(listUsersRequest);
+    } catch (e) {
+      throw new BadRequestException(e.message);
+    }
+  }
+
+  @Get('admin-get-user')
+  async adminGetUser(@Body() adminGetUserRequest: AdminGetUserRequestDto) {
+    try {
+      return await this.authService.adminGetUser(adminGetUserRequest);
     } catch (e) {
       throw new BadRequestException(e.message);
     }
