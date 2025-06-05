@@ -329,6 +329,38 @@
 			},
 			"response": []
 		},
+                {
+                        "name": "admin-get-user",
+                        "protocolProfileBehavior": {
+                                "disableBodyPruning": true
+                        },
+                        "request": {
+                                "method": "GET",
+                                "header": [],
+                                "body": {
+                                        "mode": "raw",
+                                        "raw": "{\\r\\n    \\\"email\\\": \\\"\\\"\\r\\n}",
+                                        "options": {
+                                                "raw": {
+                                                        "language": "json"
+                                                }
+                                        }
+                                },
+                                "url": {
+                                        "raw": "http://localhost:3000/auth/admin-get-user",
+                                        "protocol": "http",
+                                        "host": [
+                                                "localhost"
+                                        ],
+                                        "port": "3000",
+                                        "path": [
+                                                "auth",
+                                                "admin-get-user"
+                                        ]
+                                }
+                        },
+                        "response": []
+                },
 		{
 			"name": "get-user",
 			"protocolProfileBehavior": {
