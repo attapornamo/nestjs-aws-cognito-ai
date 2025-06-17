@@ -19,6 +19,7 @@ import { AdminDeleteUserRequestDto } from './dto/admindeleteuser.request.dto';
 import { ListUsersRequestDto } from './dto/listusers.request.dto';
 import { RequireNewPasswordRequestDto } from './dto/requirenewpassword.request.dto';
 import { AdminGetUserRequestDto } from './dto/admingetuser.request.dto';
+import { AdminResetUserPasswordRequestDto } from './dto/adminresetuserpassword.request.dto';
 
 @Controller('auth')
 export class AuthController {
@@ -163,6 +164,19 @@ export class AuthController {
   async delete(@Body() authenticateRequest: AuthenticateRequestDto) {
     try {
       return await this.authService.deleteUser(authenticateRequest);
+    } catch (e) {
+      throw new BadRequestException(e.message);
+    }
+  }
+
+  @Post('admin-reset-user-password')
+  async adminResetUserPassword(
+    @Body() adminResetUserPasswordRequest: AdminResetUserPasswordRequestDto,
+  ) {
+    try {
+      return await this.authService.adminResetUserPassword(
+        adminResetUserPasswordRequest,
+      );
     } catch (e) {
       throw new BadRequestException(e.message);
     }

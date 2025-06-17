@@ -45,6 +45,7 @@ Contains the following route:
 - auth/list-users --> List users
 - auth/get-user --> Get user
 - auth/user --> Delete user
+- auth/admin-reset-user-password --> Admin reset user password
 
 ## 7. Documentation
 The file ./postman/nestjs-aws-cognito.postman_collection.json can be imported in Postman application to test this api.
