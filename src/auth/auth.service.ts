@@ -392,7 +392,7 @@ export class AuthService {
       const response = await this.client.send(command);
       return response;
     } catch (error) {
-      if (error.name !== '') {
+      if (error.name && error.name !== '') {
         return error.name;
       }
       throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR);
