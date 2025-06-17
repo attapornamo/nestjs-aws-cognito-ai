@@ -131,8 +131,12 @@ describe('AuthController', () => {
 
   describe.each(cases)('$name', (testCase) => {
     it('returns service result', async () => {
-      (service[testCase.serviceMethod as string] as jest.Mock).mockResolvedValue('ok');
-      const result = await (controller as any)[testCase.controllerMethod](testCase.dto);
+      (
+        service[testCase.serviceMethod as string] as jest.Mock
+      ).mockResolvedValue('ok');
+      const result = await (controller as any)[testCase.controllerMethod](
+        testCase.dto,
+      );
       expect(result).toBe('ok');
       expect(service[testCase.serviceMethod as string]).toHaveBeenCalledWith(
         testCase.expectedArg ?? testCase.dto,
@@ -140,7 +144,9 @@ describe('AuthController', () => {
     });
 
     it('throws BadRequestException when service fails', async () => {
-      (service[testCase.serviceMethod as string] as jest.Mock).mockRejectedValue(new Error('fail'));
+      (
+        service[testCase.serviceMethod as string] as jest.Mock
+      ).mockRejectedValue(new Error('fail'));
       await expect(
         (controller as any)[testCase.controllerMethod](testCase.dto),
       ).rejects.toThrow(BadRequestException);
@@ -150,4 +156,3 @@ describe('AuthController', () => {
     });
   });
 });
-

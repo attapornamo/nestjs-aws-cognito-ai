@@ -27,8 +27,10 @@ import {
   ConfirmForgotPasswordCommand,
   ListUsersCommand,
   RespondToAuthChallengeCommand,
+  AdminResetUserPasswordCommand,
 } from '@aws-sdk/client-cognito-identity-provider';
 import * as crypto from 'crypto';
+import { AdminResetUserPasswordRequestDto } from './dto/adminresetuserpassword.request.dto';
 
 type MessageActionType = 'RESEND' | 'SUPPRESS';
 
@@ -38,7 +40,7 @@ export class AuthService {
   private readonly clientId: string;
   private readonly userPoolId: string;
 
-  constructor(private configService: ConfigService) {
+  constructor(private readonly configService: ConfigService) {
     // Initialize the AWS Cognito client
     this.client = new CognitoIdentityProviderClient({
       region: process.env.AWS_COGNITO_REGION,
@@ -374,6 +376,25 @@ export class AuthService {
         return error.name;
       }
 
+      throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+  }
+
+  async adminResetUserPassword(
+    adminResetUserPassword: AdminResetUserPasswordRequestDto,
+  ) {
+    const params = {
+      UserPoolId: this.userPoolId,
+      Username: adminResetUserPassword.email,
+    };
+    try {
+      const command = new AdminResetUserPasswordCommand(params);
+      const response = await this.client.send(command);
+      return response;
+    } catch (error) {
+      if (error.name !== '') {
+        return error.name;
+      }
       throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }

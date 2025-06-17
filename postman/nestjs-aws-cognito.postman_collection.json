@@ -421,6 +421,35 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "admin-reset-user-password",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/auth/admin-reset-user-password",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"auth",
+						"admin-reset-user-password"
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }
