@@ -23,6 +23,7 @@ describe('AuthController', () => {
       adminGetUser: jest.fn(),
       getUser: jest.fn(),
       deleteUser: jest.fn(),
+      adminResetUserPassword: jest.fn(),
     };
 
     const module: TestingModule = await Test.createTestingModule({
@@ -127,6 +128,12 @@ describe('AuthController', () => {
       serviceMethod: 'deleteUser',
       dto: { email: 'e', password: 'p' },
     },
+    {
+      name: 'adminResetUserPassword',
+      controllerMethod: 'adminResetUserPassword',
+      serviceMethod: 'adminResetUserPassword',
+      dto: { email: 'e' },
+    },
   ];
 
   describe.each(cases)('$name', (testCase) => {
@@ -144,9 +151,9 @@ describe('AuthController', () => {
     });
 
     it('throws BadRequestException when service fails', async () => {
-      (
-        service[testCase.serviceMethod as string] as jest.Mock
-      ).mockRejectedValue(new Error('fail'));
+      service[testCase.serviceMethod as string].mockRejectedValue(
+        new Error('fail'),
+      );
       await expect(
         (controller as any)[testCase.controllerMethod](testCase.dto),
       ).rejects.toThrow(BadRequestException);
